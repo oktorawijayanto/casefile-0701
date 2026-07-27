@@ -1,0 +1,817 @@
+/* =========================================================
+   CASE FILE #0701 — COMPLETE STYLESHEET
+   Includes: Auto-Fit Gallery Ratio, Safe Overflow, Dark Theme
+   ========================================================= */
+
+/* --- 1. ROOT VARIABLES --- */
+:root {
+    --bg-color: #050505;
+    --card-bg: rgba(18, 18, 20, 0.85);
+    --card-border: rgba(255, 255, 255, 0.08);
+    --card-hover-border: rgba(230, 57, 70, 0.4);
+    
+    --text-primary: #f0f0f3;
+    --text-secondary: #a0a0ab;
+    --text-muted: #62626e;
+    
+    --accent-red: #e63946;
+    --accent-red-glow: rgba(230, 57, 70, 0.25);
+    --accent-gold: #d4af37;
+    --accent-green: #2a9d8f;
+    
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-serif: 'Cormorant Garamond', Georgia, serif;
+    --font-mono: 'IBM Plex Mono', monospace;
+    
+    --transition-smooth: cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* --- 2. GLOBAL RESET & BASE STYLES --- */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Background Layers */
+#noise, #grain, #vignette {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 1;
+}
+
+#vignette {
+    background: radial-gradient(circle at center, transparent 40%, rgba(0, 0, 0, 0.85) 100%);
+}
+
+#grain {
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* --- 3. APP CONTAINER & SCENE MANAGER ENGINE --- */
+#app {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    z-index: 2;
+}
+
+.scene {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    padding: 3rem 1.5rem;
+    box-sizing: border-box;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    text-align: center;
+    
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(24px) scale(0.98);
+    transition: opacity 0.75s var(--transition-smooth),
+                transform 0.75s var(--transition-smooth),
+                visibility 0.75s;
+                
+    overflow-y: auto;
+    pointer-events: none;
+}
+
+/* Vertikal Centering Aman dari Cut-off Text */
+.scene > * {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.scene.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+    z-index: 10;
+}
+
+.scene::-webkit-scrollbar { display: none; }
+.scene { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* --- 4. TYPOGRAPHY & COMMON COMPONENTS --- */
+.mono {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    color: var(--accent-red);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+}
+
+.mono.small {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.section-heading {
+    margin-bottom: 2rem;
+    max-width: 650px;
+    width: 100%;
+}
+
+.section-heading h2 {
+    font-family: var(--font-serif);
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.2;
+}
+
+.divider, .birthday-divider, .ending-divider, .identity-line {
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent-red), transparent);
+    margin: 1.5rem auto;
+}
+
+.primary-button {
+    background: rgba(230, 57, 70, 0.1);
+    color: var(--text-primary);
+    border: 1px solid var(--accent-red);
+    padding: 0.85rem 2.2rem;
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 15px var(--accent-red-glow);
+    margin-top: 1rem;
+}
+
+.primary-button:hover {
+    background: var(--accent-red);
+    color: #ffffff;
+    box-shadow: 0 0 25px rgba(230, 57, 70, 0.6);
+    transform: translateY(-2px);
+}
+
+/* --- 5. SCENE SPECIFIC STYLES --- */
+
+/* SCENE 01: INTRO */
+.intro-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 3rem 2.5rem;
+    border-radius: 12px;
+    max-width: 520px;
+    width: 100%;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+.intro-card .title {
+    font-family: var(--font-serif);
+    font-size: clamp(2.5rem, 5vw, 3.8rem);
+    font-weight: 700;
+    line-height: 1.1;
+    margin-top: 0.5rem;
+}
+
+.intro-card .title span {
+    color: var(--accent-red);
+    display: block;
+}
+
+.intro-card .subtitle {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
+/* SCENE 02: TERMINAL */
+.terminal-window {
+    background: #0a0a0c;
+    border: 1px solid rgba(42, 157, 143, 0.3);
+    border-radius: 8px;
+    width: 100%;
+    max-width: 580px;
+    text-align: left;
+    box-shadow: 0 0 30px rgba(42, 157, 143, 0.15);
+    overflow: hidden;
+}
+
+.terminal-header {
+    background: #121216;
+    padding: 0.6rem 1rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--accent-green);
+    letter-spacing: 1.5px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.terminal-content {
+    padding: 1.8rem;
+    font-family: var(--font-mono);
+    font-size: 0.88rem;
+    color: #4ade80;
+    line-height: 1.8;
+}
+
+.progress-wrapper {
+    width: 100%;
+    height: 8px;
+    background: #1a1a22;
+    border-radius: 4px;
+    margin: 1.5rem 0 0.5rem 0;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #2a9d8f, #4ade80);
+    transition: width 0.15s ease-out;
+}
+
+#progressValue {
+    display: block;
+    text-align: right;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+/* SCENE 03: HERO */
+.hero {
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+.hero img {
+    max-width: 280px;
+    width: 100%;
+    height: 320px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 12px;
+    border: 1px solid var(--card-border);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+}
+
+.hero figcaption {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-top: 0.75rem;
+    letter-spacing: 1px;
+}
+
+.hero-text h2 {
+    font-family: var(--font-serif);
+    font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+    max-width: 600px;
+    font-weight: 500;
+    font-style: italic;
+    color: var(--text-primary);
+}
+
+/* SCENE 04: IDENTITY */
+.identity-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    padding: 3rem 2rem;
+    border-radius: 16px;
+    max-width: 500px;
+    width: 100%;
+    backdrop-filter: blur(10px);
+}
+
+#identityName {
+    font-family: var(--font-serif);
+    font-size: clamp(3rem, 7vw, 4.5rem);
+    font-weight: 700;
+    letter-spacing: 4px;
+    color: var(--text-primary);
+    margin: 0.5rem 0;
+}
+
+/* SCENE 05: DOSSIER */
+.dossier-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.25rem;
+    max-width: 800px;
+    width: 100%;
+}
+
+.dossier-item {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    padding: 1.5rem;
+    border-radius: 10px;
+    text-align: left;
+    transition: border-color 0.3s ease, transform 0.3s ease;
+}
+
+.dossier-item:hover {
+    border-color: var(--card-hover-border);
+    transform: translateY(-3px);
+}
+
+.dossier-item .label {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+    display: block;
+    margin-bottom: 0.4rem;
+}
+
+.dossier-item h3 {
+    font-size: 1.1rem;
+    color: var(--text-primary);
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.dossier-item p {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+/* SCENE 06: OBSERVATION */
+.observation-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.25rem;
+    max-width: 850px;
+    width: 100%;
+}
+
+.observation-list article {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    padding: 1.8rem;
+    border-radius: 12px;
+    text-align: left;
+    position: relative;
+}
+
+.observation-list article span {
+    font-family: var(--font-mono);
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: rgba(230, 57, 70, 0.2);
+    position: absolute;
+    top: 1rem;
+    right: 1.2rem;
+}
+
+.observation-list article h3 {
+    font-size: 1.1rem;
+    color: var(--accent-red);
+    margin-bottom: 0.5rem;
+}
+
+.observation-list article p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+/* SCENE 07: HABITS */
+.timeline {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.2rem;
+    max-width: 850px;
+    width: 100%;
+}
+
+.timeline-item {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    padding: 1.4rem;
+    border-radius: 10px;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    text-align: left;
+}
+
+.timeline-item span {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--accent-red);
+    background: rgba(230, 57, 70, 0.1);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+}
+
+.timeline-item h3 {
+    font-size: 1rem;
+    color: var(--text-primary);
+    margin-bottom: 0.25rem;
+}
+
+.timeline-item p {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+/* SCENE 08: FAVORITES */
+.favorite-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 1rem;
+    max-width: 700px;
+    width: 100%;
+}
+
+.favorite-grid article {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    padding: 1.2rem 0.8rem;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.favorite-grid article:hover {
+    transform: translateY(-4px);
+    border-color: var(--accent-red);
+}
+
+.favorite-grid article span {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+/* SCENE 09: GALLERY (AESTHETIC ALBUM FIX) */
+.gallery-wrapper {
+    position: relative;
+    max-width: 580px;
+    width: 100%;
+    min-height: 440px;
+}
+
+.gallery-item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(0.96);
+    transition: all 0.5s var(--transition-smooth);
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    overflow: hidden;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+.gallery-item.active {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1);
+    position: relative;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 320px; /* Tinggi seragam untuk album */
+    object-fit: cover; /* Presisi foto tanpa gepeng */
+    object-position: center;
+    border-radius: 8px;
+    margin-bottom: 0.8rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.gallery-item figcaption {
+    text-align: left;
+}
+
+.gallery-item figcaption span {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--accent-red);
+    letter-spacing: 1px;
+}
+
+.gallery-item figcaption h3 {
+    font-size: 1.1rem;
+    margin: 0.2rem 0;
+}
+
+.gallery-item figcaption p {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.gallery-control {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.gallery-control button {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    color: var(--text-primary);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.gallery-control button:hover {
+    background: var(--accent-red);
+    border-color: var(--accent-red);
+    transform: scale(1.08);
+}
+
+/* SCENE 10: MEMORY TIMELINE */
+.memory-line {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 650px;
+    width: 100%;
+}
+
+.memory-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-left: 3px solid var(--accent-red);
+    padding: 1.2rem 1.5rem;
+    border-radius: 0 10px 10px 0;
+    text-align: left;
+}
+
+.memory-card span {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--accent-red);
+    letter-spacing: 1px;
+}
+
+.memory-card h3 {
+    font-size: 1.05rem;
+    margin: 0.2rem 0;
+}
+
+.memory-card p {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+}
+
+/* SCENE 11: TRANSITION */
+.transition-box {
+    max-width: 700px;
+    padding: 2rem;
+}
+
+.transition-box .quote {
+    font-family: var(--font-serif);
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    font-style: italic;
+    line-height: 1.4;
+    color: var(--text-primary);
+}
+
+/* SCENE 12: UNSENT LETTER */
+.letter-section {
+    max-width: 650px;
+    width: 100%;
+}
+
+.typing-container {
+    background: #09090b;
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    padding: 1.8rem;
+    text-align: left;
+    font-family: var(--font-mono);
+    font-size: 0.88rem;
+    line-height: 1.8;
+    color: #e2e8f0;
+    width: 100%;
+    max-height: 55vh;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    word-break: break-word;
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8);
+    margin-top: 1.5rem;
+}
+
+/* SCENE 13: HAPPY BIRTHDAY */
+.birthday {
+    max-width: 620px;
+    width: 100%;
+    background: linear-gradient(180deg, rgba(230, 57, 70, 0.08) 0%, rgba(18, 18, 20, 0.8) 100%);
+    border: 1px solid rgba(230, 57, 70, 0.3);
+    padding: 3rem 2rem;
+    border-radius: 16px;
+    backdrop-filter: blur(10px);
+}
+
+.birthday-date {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    letter-spacing: 3px;
+    color: var(--accent-gold);
+}
+
+.birthday h1 {
+    font-family: var(--font-serif);
+    font-size: clamp(2.4rem, 6vw, 3.8rem);
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-top: 0.5rem;
+}
+
+.birthday h2 {
+    font-family: var(--font-serif);
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    color: var(--accent-red);
+    letter-spacing: 2px;
+}
+
+.birthday p {
+    font-size: 0.92rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.8rem;
+    line-height: 1.7;
+}
+
+/* SCENE 14: TRUTH */
+.truth-card {
+    max-width: 650px;
+    width: 100%;
+    text-align: left;
+}
+
+.truth-card blockquote {
+    background: var(--card-bg);
+    border-left: 3px solid var(--accent-red);
+    padding: 1.2rem 1.5rem;
+    margin-top: 1rem;
+    border-radius: 0 8px 8px 0;
+    font-family: var(--font-serif);
+    font-size: 1.15rem;
+    font-style: italic;
+    color: var(--text-primary);
+    line-height: 1.5;
+}
+
+/* SCENE 15: GRATITUDE */
+.gratitude {
+    max-width: 600px;
+    width: 100%;
+}
+
+.gratitude h2 {
+    font-family: var(--font-serif);
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.gratitude p {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+}
+
+.gratitude p.highlight {
+    color: var(--accent-red);
+    font-weight: 600;
+    font-size: 1.05rem;
+    margin-top: 1rem;
+}
+
+/* SCENE 16: ENDING */
+.ending {
+    max-width: 550px;
+    width: 100%;
+}
+
+.ending h1 {
+    font-family: var(--font-serif);
+    font-size: clamp(2.2rem, 5vw, 3.2rem);
+    margin-top: 0.5rem;
+}
+
+.ending h2 {
+    font-family: var(--font-mono);
+    font-size: 1.1rem;
+    color: var(--accent-red);
+    letter-spacing: 2px;
+}
+
+.ending p {
+    font-size: 0.92rem;
+    color: var(--text-muted);
+    margin-bottom: 0.3rem;
+}
+
+.signature {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--accent-red);
+    margin-top: 1.5rem;
+    letter-spacing: 2px;
+}
+
+/* --- 6. FLOATING UI --- */
+#musicButton {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgba(18, 18, 20, 0.8);
+    border: 1px solid var(--card-border);
+    color: var(--text-primary);
+    font-size: 1.2rem;
+    cursor: pointer;
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(8px);
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+}
+
+#musicButton:hover {
+    border-color: var(--accent-red);
+    color: var(--accent-red);
+    transform: scale(1.1);
+}
+
+#preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #050505;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+}
+
+/* --- 7. RESPONSIVE BREAKPOINTS --- */
+@media (max-width: 600px) {
+    .scene {
+        padding: 2rem 1rem;
+    }
+    
+    .gallery-item img {
+        height: 260px; /* Penyesuaian ukuran tinggi foto di layar HP */
+    }
+
+    .gallery-wrapper {
+        min-height: 380px;
+    }
+    
+    .typing-container {
+        padding: 1.2rem;
+        font-size: 0.82rem;
+        max-height: 50vh;
+    }
+}

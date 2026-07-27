@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="theme-color" content="#050505">
+    <meta name="color-scheme" content="dark">
+    <meta name="description" content="The Person of Interest — CASE FILE #0701">
+    <meta name="author" content="CASE FILE #0701">
+    <meta name="robots" content="noindex,nofollow">
+
+    <title>The Person of Interest | CASE FILE #0701</title>
+
+    <!-- GOOGLE FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Cormorant+Garamond:wght@400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- CSS STYLESHEET -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- CUSTOM STYLING: TIMELINE, TYPEWRITER FIX & NAVIGATION -->
+    <style>
+        /* SCENE 09: GALLERY PADDING */
+        #scene-gallery {
+            padding-bottom: 6rem;
+        }
+
+        /* SCENE 10: TIMELINE RESPONSIVE FIX */
+        #scene-timeline .memory-line {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            max-width: 760px;
+            margin: 0 auto;
+            padding-top: 1rem;
+            padding-bottom: 5rem;
+        }
+
+        #scene-timeline .memory-card {
+            display: flex;
+            flex-direction: row;
+            background: rgba(18, 18, 22, 0.85);
+            border-left: 3.5px solid #ff3b4b;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+        }
+
+        #scene-timeline .memory-card:hover {
+            transform: translateY(-3px);
+            background: rgba(24, 24, 30, 0.95);
+            box-shadow: 0 12px 35px rgba(255, 59, 75, 0.12);
+        }
+
+        #scene-timeline .memory-img-box {
+            width: 200px;
+            min-width: 200px;
+            position: relative;
+            overflow: hidden;
+            background: #050505;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #scene-timeline .memory-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+
+        #scene-timeline .memory-card:hover .memory-img-box img {
+            transform: scale(1.08);
+        }
+
+        #scene-timeline .memory-content {
+            padding: 1.5rem 1.8rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            flex: 1;
+            text-align: left;
+        }
+
+        #scene-timeline .memory-content span {
+            color: #ff3b4b;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 0.4rem;
+            display: block;
+        }
+
+        #scene-timeline .memory-content h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+        }
+
+        #scene-timeline .memory-content p {
+            font-size: 0.9rem;
+            color: #a0a0a8;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* SCENE 12: UNSENT LETTER FULLY READABLE FIX */
+        #scene-letter {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 1rem 7rem 1rem;
+            box-sizing: border-box;
+            min-height: 100vh;
+        }
+
+        #scene-letter .letter-section {
+            max-width: 680px;
+            width: 100%;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        #scene-letter .typing-container {
+            margin-top: 1.5rem;
+            padding: 1.8rem;
+            background: rgba(18, 18, 24, 0.90);
+            border: 1px solid rgba(255, 59, 75, 0.35);
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+            color: #f3f3f3 !important;
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 1.2rem;
+            line-height: 1.8;
+            text-align: left;
+            height: auto;
+            min-height: 180px;
+            max-height: 55vh;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            box-sizing: border-box;
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
+
+        #scene-letter .typing-container p,
+        #scene-letter .typing-container span {
+            color: #f3f3f3 !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
+
+        .typing-cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1.2em;
+            background-color: #ff3b4b;
+            margin-left: 3px;
+            vertical-align: middle;
+            animation: blinkCursor 0.8s infinite;
+        }
+
+        @keyframes blinkCursor {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* RESPONSIVE LAYAR HP */
+        @media (max-width: 640px) {
+            #scene-timeline .memory-card {
+                flex-direction: column;
+            }
+
+            #scene-timeline .memory-img-box {
+                width: 100%;
+                min-width: 100%;
+                height: auto;
+                aspect-ratio: 16 / 10;
+            }
+
+            #scene-timeline .memory-img-box img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                object-position: center top;
+            }
+
+            #scene-timeline .memory-content {
+                padding: 1.2rem;
+            }
+
+            #scene-letter .typing-container {
+                font-size: 1.05rem;
+                padding: 1.2rem;
+                max-height: 50vh;
+            }
+        }
+
+        /* FLOATING SCENE NAVIGATION CONTROLS */
+        .scene-nav {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            left: auto;
+            transform: none;
+            display: none; /* Default disembunyikan, diaktifkan via JS selain di Intro */
+            align-items: center;
+            gap: 10px;
+            z-index: 99999;
+            background: rgba(12, 12, 16, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 8px 14px;
+            border-radius: 40px;
+            border: 1px solid rgba(255, 59, 75, 0.35);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.85);
+            user-select: none;
+        }
+
+        .scene-nav button {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            outline: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .scene-nav button:hover,
+        .scene-nav button:active {
+            background: #ff3b4b;
+            color: #ffffff;
+            border-color: #ff3b4b;
+            box-shadow: 0 0 15px rgba(255, 59, 75, 0.5);
+        }
+
+        @media (max-width: 640px) {
+            .scene-nav {
+                bottom: 16px;
+                left: 50%;
+                right: auto;
+                transform: translateX(-50%);
+                padding: 6px 10px;
+            }
+
+            .scene-nav button {
+                padding: 6px 12px;
+                font-size: 0.7rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- BACKGROUND LAYERS -->
+    <div id="noise" aria-hidden="true"></div>
+    <div id="grain" aria-hidden="true"></div>
+    <div id="vignette" aria-hidden="true"></div>
+    <div id="cursor" aria-hidden="true"></div>
+
+    <!-- APP MAIN CONTAINER -->
+    <main id="app">
+
+        <!-- SCENE 01: CLASSIFIED (OPENING) -->
+        <section class="scene active" id="scene-intro" data-scene="intro">
+            <article class="intro-card">
+                <p class="mono small">CLASSIFIED ARCHIVE</p>
+                <h1 class="title">CASE FILE <span>#0701</span></h1>
+                <div class="divider"></div>
+                <p class="subtitle">This archive contains one individual who unexpectedly changed someone's life.</p>
+                <button id="btnBegin" class="primary-button" aria-label="Open Case File">OPEN FILE</button>
+            </article>
+        </section>
+
+        <!-- SCENE 02: TERMINAL -->
+        <section class="scene" id="scene-terminal" data-scene="terminal">
+            <article class="terminal-window">
+                <header class="terminal-header">ARCHIVE TERMINAL</header>
+                <div class="terminal-content">
+                    <p>> Booting archive...</p>
+                    <p>> Accessing encrypted memory...</p>
+                    <p>> Recovering evidence...</p>
+                    <p>> Decrypting archive...</p>
+                    <p>> Verifying identity...</p>
+                    <div class="progress-wrapper">
+                        <div id="progressBar" class="progress-bar"></div>
+                    </div>
+                    <span id="progressValue">0%</span>
+                </div>
+            </article>
+        </section>
+
+        <!-- SCENE 03: HERO -->
+        <section class="scene" id="scene-childhood" data-scene="childhood">
+            <figure class="hero">
+                <img src="assets/childhood.jpg" alt="Young ANINDYA" loading="eager" decoding="async">
+                <figcaption>ARCHIVE ENTRY 001</figcaption>
+            </figure>
+            <article class="hero-text">
+                <p class="mono">RECOVERED MEMORY</p>
+                <h2>Every story begins long before we become part of it.</h2>
+            </article>
+        </section>
+
+        <!-- SCENE 04: IDENTITY -->
+        <section class="scene" id="scene-identity" data-scene="identity">
+            <article class="identity-card">
+                <p class="mono">SUBJECT STATUS</p>
+                <h3 id="identityState">UNKNOWN SUBJECT</h3>
+                <div class="identity-line"></div>
+                <h1 id="identityName" class="glitch" data-text="ANINDYA">ANINDYA</h1>
+                <p>Identity Successfully Verified.</p>
+            </article>
+        </section>
+
+        <!-- SCENE 05: DOSSIER -->
+        <section class="scene" id="scene-dossier" data-scene="dossier">
+            <article class="section-heading">
+                <p class="mono">PRIMARY DOSSIER</p>
+                <h2>The Person of Interest</h2>
+            </article>
+            <div class="dossier-grid">
+                <article class="dossier-item">
+                    <span class="label">FULL NAME</span>
+                    <h3>Raden Ajeng Anindya Kusuma Darumurti</h3>
+                </article>
+                <article class="dossier-item">
+                    <span class="label">CODENAME</span>
+                    <h3>ANINDYA</h3>
+                    <p>Also known as: Anin · Nindya · Cece</p>
+                </article>
+                <article class="dossier-item">
+                    <span class="label">DATE OF BIRTH</span>
+                    <h3>06 August 1994</h3>
+                </article>
+                <article class="dossier-item">
+                    <span class="label">PERSONALITY</span>
+                    <h3>ESTJ</h3>
+                    <p>Communicative. Elegant. Consistent.</p>
+                </article>
+                <article class="dossier-item">
+                    <span class="label">STATUS</span>
+                    <h3>VERIFIED</h3>
+                    <p>Access Granted.</p>
+                </article>
+                <article class="dossier-item">
+                    <span class="label">CASE NUMBER</span>
+                    <h3>#0701</h3>
+                </article>
+            </div>
+        </section>
+
+        <!-- SCENE 06: OBSERVATION -->
+        <section class="scene" id="scene-observation" data-scene="observation">
+            <article class="section-heading">
+                <p class="mono">PERSONAL OBSERVATION</p>
+                <h2>Things That Make Her Different</h2>
+            </article>
+            <div class="observation-list">
+                <article>
+                    <span>01</span>
+                    <h3>First Impression</h3>
+                    <p>Quiet. Elegant. A little difficult to read.</p>
+                </article>
+                <article>
+                    <span>02</span>
+                    <h3>After Knowing Her</h3>
+                    <p>Warm. Talkative. Friendly. Easy to laugh.</p>
+                </article>
+                <article>
+                    <span>03</span>
+                    <h3>Greatest Strength</h3>
+                    <p>Communication. Consistency. Quiet support.</p>
+                </article>
+                <article>
+                    <span>04</span>
+                    <h3>Hidden Side</h3>
+                    <p>She always looks cheerful. Yet sometimes, she quietly carries disappointment no one else notices.</p>
+                </article>
+            </div>
+        </section>
+
+        <!-- SCENE 07: HABITS -->
+        <section class="scene" id="scene-habits" data-scene="habits">
+            <article class="section-heading">
+                <p class="mono">BEHAVIOURAL REPORT</p>
+                <h2>Little Things Worth Remembering</h2>
+            </article>
+            <div class="timeline">
+                <article class="timeline-item">
+                    <span>01</span>
+                    <div>
+                        <h3>She always knows.</h3>
+                        <p>Somehow, she can always guess what I'm thinking.</p>
+                    </div>
+                </article>
+                <article class="timeline-item">
+                    <span>02</span>
+                    <div>
+                        <h3>Latte.</h3>
+                        <p>No stirring. Just one sip.</p>
+                    </div>
+                </article>
+                <article class="timeline-item">
+                    <span>03</span>
+                    <div>
+                        <h3>Sushi.</h3>
+                        <p>One bite. Every time.</p>
+                    </div>
+                </article>
+                <article class="timeline-item">
+                    <span>04</span>
+                    <div>
+                        <h3>Photos.</h3>
+                        <p>Food first. Camera first. Then eat.</p>
+                    </div>
+                </article>
+                <article class="timeline-item">
+                    <span>05</span>
+                    <div>
+                        <h3>Caring.</h3>
+                        <p>Through small things. Almost silently.</p>
+                    </div>
+                </article>
+                <article class="timeline-item">
+                    <span>06</span>
+                    <div>
+                        <h3>Everything.</h3>
+                        <p>Coffee. Trains. The color red. Somehow... everything reminds me of her.</p>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- SCENE 08: FAVORITES -->
+        <section class="scene" id="scene-favorites" data-scene="favorites">
+            <article class="section-heading">
+                <p class="mono">FAVORITES DATABASE</p>
+                <h2>Things She Loves</h2>
+            </article>
+            <div class="favorite-grid">
+                <article>🍣 <span>Sushi</span></article>
+                <article>☕ <span>Latte</span></article>
+                <article>🇯🇵 <span>Japan</span></article>
+                <article>🌹 <span>Rose</span></article>
+                <article>🦁 <span>Lion</span></article>
+                <article>❤️ <span>Red</span></article>
+                <article>🎵 <span>Training Season</span></article>
+                <article>📺 <span>You</span></article>
+            </div>
+        </section>
+
+        <!-- SCENE 09: GALLERY -->
+        <section class="scene" id="scene-gallery" data-scene="gallery">
+            <article class="section-heading">
+                <p class="mono">RECOVERED EVIDENCE</p>
+                <h2>Moments That Never Left</h2>
+            </article>
+
+            <div class="gallery-wrapper" id="galleryWrapper">
+                <!-- FRAME 1 -->
+                <figure class="gallery-item active">
+                    <img src="assets/photo1.jpg" alt="Evidence 01" loading="eager" decoding="async">
+                    <figcaption>
+                        <span>EVIDENCE #001 — SUBJECT PORTRAIT</span>
+                        <h3>The Presence</h3>
+                        <p>Some people don't need to say anything to command a room. Just being there is enough.</p>
+                    </figcaption>
+                </figure>
+
+                <!-- FRAME 2 -->
+                <figure class="gallery-item">
+                    <img src="assets/photo2.jpg" alt="Evidence 02" loading="lazy" decoding="async">
+                    <figcaption>
+                        <span>EVIDENCE #002 — SHARED MEMORY</span>
+                        <h3>Parallel Lines</h3>
+                        <p>In a world full of noise, sitting side-by-side with you was the quietest feeling.</p>
+                    </figcaption>
+                </figure>
+
+                <!-- FRAME 3 -->
+                <figure class="gallery-item">
+                    <img src="assets/photo3.jpg" alt="Evidence 03" loading="lazy" decoding="async">
+                    <figcaption>
+                        <span>EVIDENCE #003 — UNGUARDED MOMENT</span>
+                        <h3>A Quiet Smile</h3>
+                        <p>The subtle kind of laughter that effortlessly becomes someone’s favorite memory.</p>
+                    </figcaption>
+                </figure>
+
+                <!-- FRAME 4 -->
+                <figure class="gallery-item">
+                    <img src="assets/photo4.jpg" alt="Evidence 04" loading="lazy" decoding="async">
+                    <figcaption>
+                        <span>EVIDENCE #004 — TIME STAMPED</span>
+                        <h3>Shared Silence</h3>
+                        <p>Not every moment needed words. Some were simply meant to be captured and held onto.</p>
+                    </figcaption>
+                </figure>
+
+                <!-- FRAME 5 -->
+                <figure class="gallery-item">
+                    <img src="assets/photo5.jpg" alt="Evidence 05" loading="lazy" decoding="async">
+                    <figcaption>
+                        <span>EVIDENCE #005 — ARCHIVE CLOSE-UP</span>
+                        <h3>Unfiltered</h3>
+                        <p>Consistent, genuine, and timeless. A frame that speaks for itself.</p>
+                    </figcaption>
+                </figure>
+            </div>
+
+            <div class="gallery-control">
+                <button id="galleryPrev" aria-label="Previous">←</button>
+                <button id="galleryNext" aria-label="Next">→</button>
+            </div>
+        </section>
+
+        <!-- SCENE 10: TIMELINE -->
+        <section class="scene" id="scene-timeline" data-scene="timeline">
+            <article class="section-heading">
+                <p class="mono">CASE HISTORY</p>
+                <h2>Timeline of Memories</h2>
+            </article>
+            <div class="memory-line">
+                <!-- Memory Card 1 -->
+                <article class="memory-card">
+                    <div class="memory-img-box">
+                        <img src="assets/timeline1.jpg" alt="Case Opened" loading="lazy">
+                    </div>
+                    <div class="memory-content">
+                        <span>07 JAN 2022</span>
+                        <h3>CASE OPENED</h3>
+                        <p>Two people started talking. Neither knew where the story would lead.</p>
+                    </div>
+                </article>
+
+                <!-- Memory Card 2 -->
+                <article class="memory-card">
+                    <div class="memory-img-box">
+                        <img src="assets/timeline2.jpg" alt="From Afternoon Until Night" loading="lazy">
+                    </div>
+                    <div class="memory-content">
+                        <span>FIRST LONG DAY</span>
+                        <h3>From Afternoon Until Night</h3>
+                        <p>Time passed so naturally that neither of us noticed how late it had become.</p>
+                    </div>
+                </article>
+
+                <!-- Memory Card 3 -->
+                <article class="memory-card">
+                    <div class="memory-img-box">
+                        <img src="assets/timeline3.jpg" alt="Train To Jakarta" loading="lazy">
+                    </div>
+                    <div class="memory-content">
+                        <span>TRAIN TO JAKARTA</span>
+                        <h3>One Journey.</h3>
+                        <p>Maybe my favorite memory wasn't Jakarta. It was simply being there with you.</p>
+                    </div>
+                </article>
+
+                <!-- Memory Card 4 -->
+                <article class="memory-card">
+                    <div class="memory-img-box">
+                        <img src="assets/timeline4.jpg" alt="My Favorite Moment" loading="lazy">
+                    </div>
+                    <div class="memory-content">
+                        <span>PEACE</span>
+                        <h3>My Favorite Moment</h3>
+                        <p>You fell asleep on my chest. I gently brushed your hair. The world suddenly felt quiet.</p>
+                    </div>
+                </article>
+
+                <!-- Memory Card 5 -->
+                <article class="memory-card">
+                    <div class="memory-img-box">
+                        <img src="assets/timeline5.jpg" alt="Still..." loading="lazy">
+                    </div>
+                    <div class="memory-content">
+                        <span>TODAY</span>
+                        <h3>Still...</h3>
+                        <p>Whatever our relationship looks like today, one thing has never changed.</p>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- SCENE 11: TRANSITION -->
+        <section class="scene" id="scene-transition" data-scene="transition">
+            <article class="transition-box">
+                <p class="quote">
+                    "Some people don't change your life because they stay forever. Some change it simply because they existed in it."
+                </p>
+            </article>
+        </section>
+
+        <!-- SCENE 12: LETTER -->
+        <section class="scene" id="scene-letter" data-scene="letter">
+            <article class="letter-section">
+                <p class="mono">UNSENT LETTER</p>
+                <h2>There Were Things I Never Really Said.</h2>
+                <div id="typingContainer" class="typing-container" aria-live="polite"></div>
+            </article>
+        </section>
+
+        <!-- SCENE 13: HAPPY BIRTHDAY -->
+        <section class="scene" id="scene-birthday" data-scene="birthday">
+            <article class="birthday">
+                <span class="birthday-date">06 • AUGUST • 2026</span>
+                <h1>HAPPY BIRTHDAY</h1>
+                <h2>ANINDYA</h2>
+                <div class="birthday-divider"></div>
+                <p>I hope this new chapter brings you more peace than worries, more laughter than sadness, and more reasons to genuinely smile.</p>
+                <p>I hope every prayer you've whispered finds its way to become reality.</p>
+                <p>May you always be surrounded by people who choose you, respect you, support you, and remind you how valuable you truly are.</p>
+                <p>May God protect every step, heal every unseen wound, and guide you toward the happiness you deserve.</p>
+            </article>
+        </section>
+
+        <!-- SCENE 14: FINAL TRUTH -->
+        <section class="scene" id="scene-truth" data-scene="truth">
+            <article class="truth-card">
+                <p class="mono">FINAL STATEMENT</p>
+                <h2>One Last Thing.</h2>
+                <blockquote>
+                    There is no reason to lie to me. I'm way too understanding. I get life. I understand that things happen. Sure, I'll be sad, but I'll get over it.
+                </blockquote>
+                <blockquote>
+                    I will never forget the day I started talking to you without knowing that one day I was going to love you.
+                </blockquote>
+                <blockquote>
+                    So... please just be honest with me.
+                </blockquote>
+            </article>
+        </section>
+
+        <!-- SCENE 15: GRATITUDE -->
+        <section class="scene" id="scene-gratitude" data-scene="gratitude">
+            <article class="gratitude">
+                <p class="mono">GRATITUDE</p>
+                <h2>Thank You.</h2>
+                <p>Thank you for coming into my life.</p>
+                <p>Thank you for making me smile.</p>
+                <p>Thank you for being so understanding.</p>
+                <p>Thank you for being one of my biggest supporters.</p>
+                <p>Thank you for caring, even through the smallest things.</p>
+                <p>You showed me that love isn't measured by grand gestures.</p>
+                <p>You are the person who showed me how love truly works.</p>
+                <p class="highlight">Whatever our relationship looks like today...</p>
+                <p class="highlight">I'm simply grateful our paths crossed.</p>
+            </article>
+        </section>
+
+        <!-- SCENE 16: END -->
+        <footer class="scene" id="scene-ending" data-scene="ending">
+            <article class="ending">
+                <span class="mono">CASE STATUS</span>
+                <h1>CASE FILE #0701</h1>
+                <h2>NEVER CLOSED</h2>
+                <div class="ending-divider"></div>
+                <p>Some people become a destination.</p>
+                <p>Others become a memory.</p>
+                <p>But only a few people become part of us.</p>
+                <p>No matter how much time passes.</p>
+                <div class="signature">— END OF ARCHIVE —</div>
+            </article>
+        </footer>
+
+    </main>
+
+    <!-- FLOATING SCENE NAVIGATION CONTROLS -->
+    <nav class="scene-nav" id="sceneNav" aria-label="Scene Navigation">
+        <button id="btnPrevScene" aria-label="Previous Scene">← BACK</button>
+        <button id="btnNextScene" aria-label="Next Scene">NEXT →</button>
+    </nav>
+
+    <!-- FLOATING AUDIO CONTROLLER -->
+    <button id="musicButton" aria-label="Toggle background music">♪</button>
+    <audio id="bgMusic" preload="auto" loop autoplay>
+        <source src="audio/piano.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- PRELOADER -->
+    <div id="preloader" aria-hidden="true">
+        <div class="loader">LOADING...</div>
+    </div>
+
+    <!-- JAVASCRIPT ENGINE -->
+    <script src="js/sceneManager.js"></script>
+
+    <!-- CUSTOM NAVIGATION & TYPEWRITER CONTROL SCRIPT -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const btnPrev = document.getElementById('btnPrevScene');
+            const btnNext = document.getElementById('btnNextScene');
+            const sceneNav = document.getElementById('sceneNav');
+
+            // 1. BLOKIR TAP/CLICK DI LAYAR UNTUK MOVE PAGE (HANYA DENGAN TOMBOL NAVIGASI / OPEN FILE)
+            document.addEventListener('click', (e) => {
+                const isControl = e.target.closest('button, a, .scene-nav, .gallery-control, #btnBegin, #musicButton, #galleryPrev, #galleryNext');
+                if (!isControl) {
+                    e.stopPropagation();
+                    e.stopImmediatePropagation();
+                }
+            }, true);
+
+            // 2. KONTROL VISIBILITAS NAVIGASI (HANYA TAMPIL SETELAH OPEN FILE DITEKAN)
+            function updateNavVisibility() {
+                const introScene = document.getElementById('scene-intro');
+                if (introScene && introScene.classList.contains('active')) {
+                    if (sceneNav) sceneNav.style.display = 'none';
+                } else {
+                    if (sceneNav) sceneNav.style.display = 'flex';
+                }
+            }
+
+            // Monitor perubahan scene untuk menyembunyikan/menampilkan navigasi
+            const sceneObserver = new MutationObserver(updateNavVisibility);
+            document.querySelectorAll('.scene').forEach(sc => {
+                sceneObserver.observe(sc, { attributes: true, attributeFilter: ['class'] });
+            });
+            updateNavVisibility();
+
+            // 3. FUNGSI NAVIGASI TOMBOL NEXT / BACK
+            function navigateScene(direction) {
+                if (window.sceneManager) {
+                    if (direction === 'next' && typeof window.sceneManager.next === 'function') return window.sceneManager.next();
+                    if (direction === 'prev' && typeof window.sceneManager.prev === 'function') return window.sceneManager.prev();
+                    if (direction === 'next' && typeof window.sceneManager.nextScene === 'function') return window.sceneManager.nextScene();
+                    if (direction === 'prev' && typeof window.sceneManager.prevScene === 'function') return window.sceneManager.prevScene();
+                }
+                if (direction === 'next' && typeof window.nextScene === 'function') return window.nextScene();
+                if (direction === 'prev' && typeof window.prevScene === 'function') return window.prevScene();
+
+                // Fallback Keyboard Event
+                const key = direction === 'next' ? 'ArrowRight' : 'ArrowLeft';
+                const keyCode = direction === 'next' ? 39 : 37;
+                document.dispatchEvent(new KeyboardEvent('keydown', { key: key, keyCode: keyCode, bubbles: true }));
+
+                // Fallback DOM
+                const scenes = Array.from(document.querySelectorAll('.scene'));
+                const activeIndex = scenes.findIndex(s => s.classList.contains('active'));
+                
+                if (activeIndex !== -1) {
+                    let targetIndex = direction === 'next' ? activeIndex + 1 : activeIndex - 1;
+                    if (targetIndex >= 0 && targetIndex < scenes.length) {
+                        scenes[activeIndex].classList.remove('active');
+                        scenes[targetIndex].classList.add('active');
+                        scenes[targetIndex].scrollIntoView({ behavior: 'smooth' });
+                    }
+                }
+                setTimeout(updateNavVisibility, 50);
+            }
+
+            btnPrev?.addEventListener('click', (e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                navigateScene('prev');
+            });
+
+            btnNext?.addEventListener('click', (e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                navigateScene('next');
+            });
+
+            // 4. AUTO TYPEWRITER ENGINE UNTUK SCENE 12 (UNSENT LETTER)
+            const defaultLetterText = `I thought about keeping all of this to myself, but some thoughts deserve to be acknowledged.
+
+Thank you for being a part of my life, for the quiet moments, the shared laughter, and the memories that time won't erase.
+
+No matter where life takes us, I will always wish you the absolute best.`;
+
+            let isTypingStarted = false;
+
+            function checkAndRunTypewriter() {
+                const letterScene = document.getElementById('scene-letter');
+                const container = document.getElementById('typingContainer');
+
+                if (letterScene && letterScene.classList.contains('active') && container) {
+                    if (!isTypingStarted && container.innerText.trim() === '') {
+                        isTypingStarted = true;
+                        let index = 0;
+                        container.innerHTML = '<span id="typewriterText"></span><span class="typing-cursor"></span>';
+                        const textSpan = document.getElementById('typewriterText');
+
+                        function typeChar() {
+                            if (index < defaultLetterText.length) {
+                                textSpan.textContent += defaultLetterText.charAt(index);
+                                index++;
+                                container.scrollTop = container.scrollHeight; // Auto scroll lembut saat ngetik
+                                setTimeout(typeChar, 35);
+                            }
+                        }
+                        typeChar();
+                    }
+                } else if (letterScene && !letterScene.classList.contains('active')) {
+                    isTypingStarted = false;
+                }
+            }
+
+            const letterObserver = new MutationObserver(checkAndRunTypewriter);
+            const sceneLetterEl = document.getElementById('scene-letter');
+            if (sceneLetterEl) {
+                letterObserver.observe(sceneLetterEl, { attributes: true, attributeFilter: ['class'] });
+            }
+            
+            checkAndRunTypewriter();
+        });
+    </script>
+
+</body>
+
+</html>
