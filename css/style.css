@@ -534,15 +534,11 @@ main#app {
     box-shadow: 0 12px 35px rgba(255, 59, 75, 0.12);
 }
 
-/* Pengaturan Pembungkus Foto agar Menampilkan Foto Utuh 100% */
 #scene-timeline .memory-img-box {
     width: 220px;
     min-width: 220px;
     height: auto;
-    min-height: 0;
-    max-height: none;
     position: relative;
-    overflow: hidden;
     background: rgba(0, 0, 0, 0.4);
     display: flex;
     align-items: center;
@@ -555,17 +551,15 @@ main#app {
     width: 100% !important;
     height: auto !important;
     max-width: 100% !important;
-    max-height: 260px !important;
-    object-fit: contain !important; /* Menampilkan seluruh foto tanpa terpotong (crop) */
-    object-position: center !important;
-    aspect-ratio: auto !important; /* Menjaga rasio asli foto */
+    max-height: 100% !important;
+    object-fit: contain !important;
     display: block;
     transition: transform 0.5s ease;
     border-radius: 6px;
 }
 
 #scene-timeline .memory-card:hover .memory-img-box img {
-    transform: scale(1.04);
+    transform: scale(1.03);
 }
 
 #scene-timeline .memory-content {
@@ -936,12 +930,17 @@ main#app {
         width: 100%;
         min-width: 100%;
         height: auto;
-        aspect-ratio: auto;
-        padding: 10px;
+        padding: 0;
+        background: transparent;
     }
 
     #scene-timeline .memory-img-box img {
-        max-height: 450px !important;
+        width: 100% !important;
+        height: auto !important;
+        max-width: 100% !important;
+        max-height: none !important;
+        object-fit: contain !important;
+        border-radius: 12px 12px 0 0;
     }
 
     #scene-timeline .memory-content {
