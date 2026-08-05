@@ -1,194 +1,64 @@
 /*==========================================================
 CASE FILE #0701
-TYPEWRITER ENGINE
+TYPEWRITER ENGINE — Single Source of Truth
 ==========================================================*/
 
-class Typewriter{
+class Typewriter {
 
-    constructor(){
+    constructor() {
+        this.container = document.getElementById("typingContainer");
+        this.speed = 32;
+        this.started = false;
+        this.text = `My Favorite Person, ANINDYA.
 
-        this.container=document.getElementById("typingContainer");
+If you're reading this, it means you've reached the last pages of this little archive.
 
-        if(!this.container)return;
+This website isn't just about memories. It's about someone who unknowingly became one of the most meaningful parts of my life.
 
-        this.speed=32;
+Thank you for every conversation.
+Thank you for every laugh.
+Thank you for every little moment that slowly became something unforgettable.
 
-        this.started=false;
+You taught me that consistency matters.
+You reminded me that caring doesn't always have to be loud.
+Sometimes... it's hidden inside the smallest things.
 
-        this.text=`
+I sincerely hope you'll always be happy.
+May your dreams find their way.
+May your prayers be answered.
+May your smile never disappear.
 
-Happy Birthday, ANINDYA.
-
-If you're reading this,
-
-it means you've reached
-the last pages
-of this little archive.
-
-This website
-isn't just about memories.
-
-It's about someone
-who unknowingly
-became one of
-the most meaningful
-parts of my life.
-
-Thank you
-for every conversation.
-
-Thank you
-for every laugh.
-
-Thank you
-for every little moment
-that slowly became
-something unforgettable.
-
-You taught me
-that consistency matters.
-
-You reminded me
-that caring
-doesn't always
-have to be loud.
-
-Sometimes...
-
-it's hidden
-inside
-the smallest things.
-
-I sincerely hope
-
-you'll always be happy.
-
-May your dreams
-find their way.
-
-May your prayers
-be answered.
-
-May your smile
-never disappear.
-
-And if one day
-life becomes difficult,
-
-I hope
-you'll always remember
-
-how incredible
-you really are.
-
-There is no reason
-to lie to me.
-
-I'm way too understanding.
-
-I get shit.
-
-I get life.
-
-I understand
-that shit happens.
-
-Sure I'll be sad,
-
-but I'll get over it.
-
-I will never forget
-the day
-I started talking to you
-
-without knowing
-
-that I was going
-to love you.
-
-So...
-
-please
-
-just be straight up
-with me.
-
-Be honest with me.
-
-Happy Birthday.
+And if one day life becomes difficult, I hope you'll always remember how incredible you really are.
 
 With all my respect,
 
-❤️
-
-`;
-
-        this.observe();
-
+❤️`;
     }
 
-    observe(){
+    start() {
+        if (this.started || !this.container) return;
+        this.started = true;
+        this.type();
+    }
 
-        const scene=document.getElementById("scene-letter");
+    async type() {
+        this.container.innerHTML = '<span id="twText"></span><span class="typing-cursor"></span>';
+        const textSpan = document.getElementById("twText");
 
-        if(!scene)return;
-
-        const observer=new IntersectionObserver(
-
-            entries=>{
-
-                entries.forEach(entry=>{
-
-                    if(entry.isIntersecting && !this.started){
-
-                        this.started=true;
-
-                        this.type();
-
-                    }
-
-                });
-
-            },
-
-            {
-
-                threshold:.45
-
+        for (let i = 0; i < this.text.length; i++) {
+            if (textSpan) {
+                textSpan.textContent += this.text.charAt(i);
+                this.container.scrollTop = this.container.scrollHeight;
             }
-
-        );
-
-        observer.observe(scene);
-
-    }
-
-    async type(){
-
-        this.container.innerHTML="";
-
-        for(let i=0;i<this.text.length;i++){
-
-            this.container.innerHTML+=this.text.charAt(i);
-
-            window.scrollBy(0,0);
-
             await this.sleep(this.speed);
-
         }
-
     }
 
-    sleep(ms){
-
-        return new Promise(resolve=>{
-
-            setTimeout(resolve,ms);
-
-        });
-
+    sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
     }
-
 }
 
-window.typewriter=new Typewriter();
+document.addEventListener("DOMContentLoaded", () => {
+    window.typewriter = new Typewriter();
+});
