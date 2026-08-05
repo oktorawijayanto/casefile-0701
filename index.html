@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="theme-color" content="#050505">
     <meta name="color-scheme" content="dark">
@@ -20,259 +20,6 @@
 
     <!-- CSS STYLESHEET -->
     <link rel="stylesheet" href="css/style.css">
-
-    <!-- CUSTOM STYLING: TIMELINE, TYPEWRITER FIX & NAVIGATION -->
-    <style>
-        /* SCENE 09: GALLERY PADDING */
-        #scene-gallery {
-            padding-bottom: 6rem;
-        }
-
-        /* SCENE 10: TIMELINE RESPONSIVE FIX */
-        #scene-timeline .memory-line {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-            max-width: 760px;
-            margin: 0 auto;
-            padding-top: 1rem;
-            padding-bottom: 5rem;
-        }
-
-        #scene-timeline .memory-card {
-            display: flex;
-            flex-direction: row;
-            background: rgba(18, 18, 22, 0.85);
-            border-left: 3.5px solid #ff3b4b;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            border-right: 1px solid rgba(255, 255, 255, 0.05);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
-        }
-
-        #scene-timeline .memory-card:hover {
-            transform: translateY(-3px);
-            background: rgba(24, 24, 30, 0.95);
-            box-shadow: 0 12px 35px rgba(255, 59, 75, 0.12);
-        }
-
-        #scene-timeline .memory-img-box {
-            width: 200px;
-            min-width: 200px;
-            position: relative;
-            overflow: hidden;
-            background: #050505;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        #scene-timeline .memory-img-box img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center;
-            display: block;
-            transition: transform 0.5s ease;
-        }
-
-        #scene-timeline .memory-card:hover .memory-img-box img {
-            transform: scale(1.08);
-        }
-
-        #scene-timeline .memory-content {
-            padding: 1.5rem 1.8rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            flex: 1;
-            text-align: left;
-        }
-
-        #scene-timeline .memory-content span {
-            color: #ff3b4b;
-            font-family: 'IBM Plex Mono', monospace;
-            font-size: 0.8rem;
-            letter-spacing: 2px;
-            font-weight: 600;
-            text-transform: uppercase;
-            margin-bottom: 0.4rem;
-            display: block;
-        }
-
-        #scene-timeline .memory-content h3 {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: #ffffff;
-            margin-bottom: 0.5rem;
-        }
-
-        #scene-timeline .memory-content p {
-            font-size: 0.9rem;
-            color: #a0a0a8;
-            line-height: 1.6;
-            margin: 0;
-        }
-
-        /* SCENE 12: UNSENT LETTER FULLY READABLE FIX */
-        #scene-letter {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 2rem 1rem 7rem 1rem;
-            box-sizing: border-box;
-            min-height: 100vh;
-        }
-
-        #scene-letter .letter-section {
-            max-width: 680px;
-            width: 100%;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        #scene-letter .typing-container {
-            margin-top: 1.5rem;
-            padding: 1.8rem;
-            background: rgba(18, 18, 24, 0.90);
-            border: 1px solid rgba(255, 59, 75, 0.35);
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
-            color: #f3f3f3 !important;
-            font-family: 'Cormorant Garamond', Georgia, serif;
-            font-size: 1.2rem;
-            line-height: 1.8;
-            text-align: left;
-            height: auto;
-            min-height: 180px;
-            max-height: 55vh;
-            overflow-y: auto;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-            box-sizing: border-box;
-            visibility: visible !important;
-            opacity: 1 !important;
-        }
-
-        #scene-letter .typing-container p,
-        #scene-letter .typing-container span {
-            color: #f3f3f3 !important;
-            visibility: visible !important;
-            opacity: 1 !important;
-        }
-
-        .typing-cursor {
-            display: inline-block;
-            width: 2px;
-            height: 1.2em;
-            background-color: #ff3b4b;
-            margin-left: 3px;
-            vertical-align: middle;
-            animation: blinkCursor 0.8s infinite;
-        }
-
-        @keyframes blinkCursor {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-        }
-
-        /* RESPONSIVE LAYAR HP */
-        @media (max-width: 640px) {
-            #scene-timeline .memory-card {
-                flex-direction: column;
-            }
-
-            #scene-timeline .memory-img-box {
-                width: 100%;
-                min-width: 100%;
-                height: auto;
-                aspect-ratio: 16 / 10;
-            }
-
-            #scene-timeline .memory-img-box img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-                object-position: center top;
-            }
-
-            #scene-timeline .memory-content {
-                padding: 1.2rem;
-            }
-
-            #scene-letter .typing-container {
-                font-size: 1.05rem;
-                padding: 1.2rem;
-                max-height: 50vh;
-            }
-        }
-
-        /* FLOATING SCENE NAVIGATION CONTROLS */
-        .scene-nav {
-            position: fixed;
-            bottom: 28px;
-            right: 28px;
-            left: auto;
-            transform: none;
-            display: none; /* Default disembunyikan, diaktifkan via JS selain di Intro */
-            align-items: center;
-            gap: 10px;
-            z-index: 99999;
-            background: rgba(12, 12, 16, 0.85);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            padding: 8px 14px;
-            border-radius: 40px;
-            border: 1px solid rgba(255, 59, 75, 0.35);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.85);
-            user-select: none;
-        }
-
-        .scene-nav button {
-            background: transparent;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: #ffffff;
-            font-family: 'IBM Plex Mono', monospace;
-            font-size: 0.75rem;
-            font-weight: 600;
-            letter-spacing: 1.5px;
-            padding: 8px 16px;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.25s ease;
-            outline: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .scene-nav button:hover,
-        .scene-nav button:active {
-            background: #ff3b4b;
-            color: #ffffff;
-            border-color: #ff3b4b;
-            box-shadow: 0 0 15px rgba(255, 59, 75, 0.5);
-        }
-
-        @media (max-width: 640px) {
-            .scene-nav {
-                bottom: 16px;
-                left: 50%;
-                right: auto;
-                transform: translateX(-50%);
-                padding: 6px 10px;
-            }
-
-            .scene-nav button {
-                padding: 6px 12px;
-                font-size: 0.7rem;
-            }
-        }
-    </style>
 </head>
 
 <body>
@@ -288,7 +35,7 @@
 
         <!-- SCENE 01: CLASSIFIED (OPENING) -->
         <section class="scene active" id="scene-intro" data-scene="intro">
-            <article class="intro-card">
+            <article class="intro-card float">
                 <p class="mono small">CLASSIFIED ARCHIVE</p>
                 <h1 class="title">CASE FILE <span>#0701</span></h1>
                 <div class="divider"></div>
@@ -700,7 +447,7 @@
 
     <!-- FLOATING AUDIO CONTROLLER -->
     <button id="musicButton" aria-label="Toggle background music">♪</button>
-    <audio id="bgMusic" preload="auto" loop autoplay>
+    <audio id="bgMusic" preload="auto" loop>
         <source src="audio/piano.mp3" type="audio/mpeg">
     </audio>
 
@@ -709,129 +456,13 @@
         <div class="loader">LOADING...</div>
     </div>
 
-    <!-- JAVASCRIPT ENGINE -->
+    <!-- JAVASCRIPT ENGINES IN PROPER ORDER -->
+    <script src="js/audio.js"></script>
+    <script src="js/gallery.js"></script>
+    <script src="js/glitch.js"></script>
+    <script src="js/typewriter.js"></script>
     <script src="js/sceneManager.js"></script>
-
-    <!-- CUSTOM NAVIGATION & TYPEWRITER CONTROL SCRIPT -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const btnPrev = document.getElementById('btnPrevScene');
-            const btnNext = document.getElementById('btnNextScene');
-            const sceneNav = document.getElementById('sceneNav');
-
-            // 1. BLOKIR TAP/CLICK DI LAYAR UNTUK MOVE PAGE (HANYA DENGAN TOMBOL NAVIGASI / OPEN FILE)
-            document.addEventListener('click', (e) => {
-                const isControl = e.target.closest('button, a, .scene-nav, .gallery-control, #btnBegin, #musicButton, #galleryPrev, #galleryNext');
-                if (!isControl) {
-                    e.stopPropagation();
-                    e.stopImmediatePropagation();
-                }
-            }, true);
-
-            // 2. KONTROL VISIBILITAS NAVIGASI (HANYA TAMPIL SETELAH OPEN FILE DITEKAN)
-            function updateNavVisibility() {
-                const introScene = document.getElementById('scene-intro');
-                if (introScene && introScene.classList.contains('active')) {
-                    if (sceneNav) sceneNav.style.display = 'none';
-                } else {
-                    if (sceneNav) sceneNav.style.display = 'flex';
-                }
-            }
-
-            // Monitor perubahan scene untuk menyembunyikan/menampilkan navigasi
-            const sceneObserver = new MutationObserver(updateNavVisibility);
-            document.querySelectorAll('.scene').forEach(sc => {
-                sceneObserver.observe(sc, { attributes: true, attributeFilter: ['class'] });
-            });
-            updateNavVisibility();
-
-            // 3. FUNGSI NAVIGASI TOMBOL NEXT / BACK
-            function navigateScene(direction) {
-                if (window.sceneManager) {
-                    if (direction === 'next' && typeof window.sceneManager.next === 'function') return window.sceneManager.next();
-                    if (direction === 'prev' && typeof window.sceneManager.prev === 'function') return window.sceneManager.prev();
-                    if (direction === 'next' && typeof window.sceneManager.nextScene === 'function') return window.sceneManager.nextScene();
-                    if (direction === 'prev' && typeof window.sceneManager.prevScene === 'function') return window.sceneManager.prevScene();
-                }
-                if (direction === 'next' && typeof window.nextScene === 'function') return window.nextScene();
-                if (direction === 'prev' && typeof window.prevScene === 'function') return window.prevScene();
-
-                // Fallback Keyboard Event
-                const key = direction === 'next' ? 'ArrowRight' : 'ArrowLeft';
-                const keyCode = direction === 'next' ? 39 : 37;
-                document.dispatchEvent(new KeyboardEvent('keydown', { key: key, keyCode: keyCode, bubbles: true }));
-
-                // Fallback DOM
-                const scenes = Array.from(document.querySelectorAll('.scene'));
-                const activeIndex = scenes.findIndex(s => s.classList.contains('active'));
-                
-                if (activeIndex !== -1) {
-                    let targetIndex = direction === 'next' ? activeIndex + 1 : activeIndex - 1;
-                    if (targetIndex >= 0 && targetIndex < scenes.length) {
-                        scenes[activeIndex].classList.remove('active');
-                        scenes[targetIndex].classList.add('active');
-                        scenes[targetIndex].scrollIntoView({ behavior: 'smooth' });
-                    }
-                }
-                setTimeout(updateNavVisibility, 50);
-            }
-
-            btnPrev?.addEventListener('click', (e) => {
-                e.stopPropagation();
-                e.preventDefault();
-                navigateScene('prev');
-            });
-
-            btnNext?.addEventListener('click', (e) => {
-                e.stopPropagation();
-                e.preventDefault();
-                navigateScene('next');
-            });
-
-            // 4. AUTO TYPEWRITER ENGINE UNTUK SCENE 12 (UNSENT LETTER)
-            const defaultLetterText = `I thought about keeping all of this to myself, but some thoughts deserve to be acknowledged.
-
-Thank you for being a part of my life, for the quiet moments, the shared laughter, and the memories that time won't erase.
-
-No matter where life takes us, I will always wish you the absolute best.`;
-
-            let isTypingStarted = false;
-
-            function checkAndRunTypewriter() {
-                const letterScene = document.getElementById('scene-letter');
-                const container = document.getElementById('typingContainer');
-
-                if (letterScene && letterScene.classList.contains('active') && container) {
-                    if (!isTypingStarted && container.innerText.trim() === '') {
-                        isTypingStarted = true;
-                        let index = 0;
-                        container.innerHTML = '<span id="typewriterText"></span><span class="typing-cursor"></span>';
-                        const textSpan = document.getElementById('typewriterText');
-
-                        function typeChar() {
-                            if (index < defaultLetterText.length) {
-                                textSpan.textContent += defaultLetterText.charAt(index);
-                                index++;
-                                container.scrollTop = container.scrollHeight; // Auto scroll lembut saat ngetik
-                                setTimeout(typeChar, 35);
-                            }
-                        }
-                        typeChar();
-                    }
-                } else if (letterScene && !letterScene.classList.contains('active')) {
-                    isTypingStarted = false;
-                }
-            }
-
-            const letterObserver = new MutationObserver(checkAndRunTypewriter);
-            const sceneLetterEl = document.getElementById('scene-letter');
-            if (sceneLetterEl) {
-                letterObserver.observe(sceneLetterEl, { attributes: true, attributeFilter: ['class'] });
-            }
-            
-            checkAndRunTypewriter();
-        });
-    </script>
+    <script src="js/app.js"></script>
 
 </body>
 
